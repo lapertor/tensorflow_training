@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 def init_variables():
     """
@@ -12,7 +14,7 @@ def get_dataset():
         Procédure générant une dataset aléatoire
     """
     # Nombre de lignes par classe
-    row_per_class = 5
+    row_per_class = 100
     # Génération des lignes sous forme de matrice
     sick = np.random.randn(row_per_class, 2) + np.array([-2, -2])
     healthy = np.random.randn(row_per_class, 2) + np.array([2, 2])
@@ -34,13 +36,67 @@ def activation(z):
     """
     return 1 / (1 + np.exp(-z))
 
+def derivative_activation(z):
+    """
+    """
+    return activation(z) * (1 - activation(z))
+
+def predict(features, weights, bias):
+    """
+    """
+    z = pre_activation(features, weights, bias)
+    y = activation(z)
+    return np.round(y)
+
+def cost(predictions, targets):
+    """
+    """
+    return np.mean( (predictions - targets)**2 )
+
+def train(features, targets, weights, bias):
+    """
+    """
+
+    epochs = 100
+    learning_rate = 0.1
+
+    # Affichage de la précision
+    predictions = predict(features, weights, bias)
+    print("Accuracy = ", np.mean(predictions == targets))
+
+    # Affichage des points
+    # plt.scatter(features[:, 0], features[:, 1], s=40, c=targets, cmap=plt.cm.Spectral)
+    # plt.show()
+
+    for epoch in range(epochs):
+        if epoch % 10 == 0:
+            predictions = activation(pre_activation(features, weights, bias))
+            print("Cost = %s" % cost(predictions, targets))
+        # Initialisation du gradient
+        weights_gradients = np.zeros(weights.shape)
+        bias_gradient = 0
+        # Parcours des lignes
+        for feature, target in zip(features, targets):
+            # calcul de la prédiction
+            z = pre_activation(feature, weights, bias)
+            y = activation(z)
+            # Mise à jour des gradients
+            weights_gradients += (y - target) * derivative_activation(z) * feature
+            bias_gradient += (y - target) * derivative_activation(z)
+        # mise à jour des variables
+        weights = weights - learning_rate * weights_gradients
+        bias = bias - learning_rate * bias_gradient
+    
+    predictions = predict(features, weights, bias)
+    print("Accuracy = ", np.mean(predictions == targets))
+
+
+
+
 if __name__ == '__main__':
     # Dataset
     features, targets = get_dataset()
     # Variables
     weights, bias = init_variables()
-    # Calcul de la pré-activation
-    z = pre_activation(features, weights, bias)
-    # Calcul de l'activationn
-    a = activation(z)
+    train(features, targets, weights, bias)
     pass
