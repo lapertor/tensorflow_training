@@ -22,7 +22,6 @@ sortie du neurone en comparant avec les targets (résultats attendus)
 À partir de ce cost, on ajuste les poids et biais en faisant une 
 moyenne de leurs gradients pour chaque personne
 """
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -118,10 +117,7 @@ def train(features, targets, weights, bias):
     
     predictions = predict(features, weights, bias)
     print("Accuracy = ", np.mean(predictions == targets))
-
-
-
-
+    
 if __name__ == '__main__':
     # Dataset
     features, targets = get_dataset()
