@@ -42,9 +42,8 @@ def get_dataset():
     row_per_class = 100
     # Génération des lignes sous forme de matrice
     sick = np.random.randn(row_per_class, 2) + np.array([-2, -2])
-    healthy = np.random.randn(row_per_class, 2) + np.array([2, 2])
-
-    sick2 = np.random.randn(row_per_class, 2) + np.array([2, -2])
+    sick2 = np.random.randn(row_per_class, 2) + np.array([2, 2])
+    healthy = np.random.randn(row_per_class, 2) + np.array([2, -2])
     healthy2 = np.random.randn(row_per_class, 2) + np.array([-2, 2])
 
     features = np.vstack([sick, sick2, healthy, healthy2])
