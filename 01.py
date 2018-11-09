@@ -1,3 +1,28 @@
+"""
+Avec ce programme, on cherche à différencier les personnes malades
+des personnes saines à partir de leur taux de globules blancs et 
+de globules rouges
+
+DATASET = [features, targets]
+features = [taux_globules_blanc_1   taux_globules_rouges_1
+.                   ...                     ...           ]
+targets = [0 pour malade, 1 pour positif
+.                       ...             ]
+
+On va utiliser un neurone :
+    - Prends une ligne des features
+    - Leur attribut des poids et un biais
+    - Fait une pré-activation
+    - Normalise la pré-activation grâce à l'activation
+    - Sort l'activation
+
+On détermine ensuite pour chaque personne une erreur (cost) sur la 
+sortie du neurone en comparant avec les targets (résultats attendus)
+
+À partir de ce cost, on ajuste les poids et biais en faisant une 
+moyenne de leurs gradients pour chaque personne
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
