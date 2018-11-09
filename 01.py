@@ -9,6 +9,7 @@ def init_variables():
     weights = np.random.normal(size=2)
     bias = 0
     return weights, bias
+
 def get_dataset():
     """
         Procédure générant une dataset aléatoire
