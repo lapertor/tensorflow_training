@@ -48,12 +48,22 @@ if __name__ == '__main__':
     #}))
 
     # Déclaration puis initialisation des variables
-    w = tf.Variable(tf.random_normal([2, 1]))
-    b = tf.Variable(tf.zeros([1]))
+    # Premières liaisons entrée-neurones du hidden layout
+    w1 = tf.Variable(tf.random_normal([2, 3]))
+    b1 = tf.Variable(tf.zeros([3]))
 
-    # Déclaration de la préactivation puis de l'activation
-    z = tf.matmul(tf_features, w) + b
-    py = tf.nn.sigmoid(z)
+
+    # Déclaration de la préactivation puis de l'activation des premiers neurones du hidden layout
+    z1 = tf.matmul(tf_features, w1) + b1
+    a1 = tf.nn.sigmoid(z1)
+
+    # Neurone de sortie : variables
+    w2 = tf.Variable(tf.random_normal([3, 1]))
+    b2 = tf.Variable(tf.zeros([1]))
+
+    # Préactivation et activation du neurone de sortie
+    z2 = tf.matmul(a1, w2) + b2
+    py = tf.nn.sigmoid(z2)
 
     # Calcul du cout (erreur) de la prédiction par rapport à la valeur réelle
     cost = tf.reduce_mean(tf.square(py - tf_targets))
@@ -71,13 +81,13 @@ if __name__ == '__main__':
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
-    for e in range(1000):
+    for e in range(10000):
         sess.run(train, feed_dict={
             tf_features: features,
             tf_targets: targets
         })
 
-        if e % 50 == 0:
+        if e % 500 == 0:
             print("accuracy = ", sess.run(accuracy, feed_dict={
                 tf_features: features,
                 tf_targets: targets
